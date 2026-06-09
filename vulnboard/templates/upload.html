@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>ファイルアップロード</h2>
+<p>Ch09 ファイルアップロード脆弱点 実習用ページです。</p>
+
+<form method="post" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+        <input type="file" name="file" class="form-control" required>
+    </div>
+    <button class="btn btn-primary">アップロード</button>
+</form>
+
+<h5>アップロードされたファイル一覧 (直接アクセス可能)</h5>
+<ul>
+    {% for f in files %}
+        <li>
+            <a href="/uploads/{{ f.filename }}" target="_blank">{{ f.original_name }}</a>
+            (by {{ f.username }})
+        </li>
+    {% else %}
+        <li>アップロードされたファイルがありません。</li>
+    {% endfor %}
+</ul>
+
+<div class="alert alert-warning small mt-3">
+    <strong>このページで実習すること:</strong><br>
+    - 拡張子建回 (php, jsp, phtml など)<br>
+    - ファイル名に経路挿入 (../ など)<br>
+    - アップロード後のファイルを直接呼び出して実行させる<br>
+    - ウェブシェルアップロード後 /uploads/webshell.php?cmd=whoami のように攻撃
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">VulnBoard</h1>
+    <p class="lead">ウェブハッキング 実習を為した <span class="vuln-highlight">意図的に脆弱な</span> コミュニティサイト</p>
+    <p class="text-muted">クリハクティブの一巻で終わるウェブハッキングバイブル (特に SQL Injection パート) 実習用</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">このサイトでできること</div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>SQL Injection</strong> (最も豊富): ログイン建回、投稿検索、投稿 ID、UNION、Blind、Time-based など</li>
+                    <li>Stored XSS (コメントシステム)</li>
+                    <li>IDOR / Parameter Tampering (プロファイル)</li>
+                    <li>Broken Access Control (管理者ページ)</li>
+                    <li>基本ファイルアップロード脆弱点</li>
+                    <li>OS Command Injection (Ping ツール)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4 border-danger">
+            <div class="card-header bg-danger text-white">始める前に</div>
+            <div class="card-body">
+                <ol>
+                    <li>Burp Suite Community を実行してプロクシ設定 (127.0.0.1:8080)</li>
+                    <li>このブラウザのプロクシを Burp へ切り替える</li>
+                    <li>下のアカウントでまずログインしてみよう (普通のログイン)</li>
+                    <li>その次 <strong>SQLi で admin アカウントを脱取</strong> するのが最初の目標</li>
+                </ol>
+                <p class="mb-0"><strong>基本アカウント:</strong><br>
+                admin / admin123!@#<br>
+                chulsu / test123</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-warning">
+    <strong>ヒント:</strong> /reset でいつでも DB を初期状態に戻せます。実験して壊しても OK！
+</div>
+{% endblock %}

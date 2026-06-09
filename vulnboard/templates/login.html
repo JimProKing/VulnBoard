@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <h2>ログイン</h2>
+        <p class="text-muted">SQL Injection の最もクラシックな進入点です。</p>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">アイディ (username)</label>
+                <input type="text" name="username" class="form-control" value="admin" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">パスワード</label>
+                <input type="text" name="password" class="form-control" value="admin123!@#" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">ログイン</button>
+        </form>
+
+        <div class="mt-4">
+            <h6>SQLi 実習用ペイロード ヒント (自分で考えてみよう)</h6>
+            <ul class="small text-muted">
+                <li>admin' -- </li>
+                <li>' OR '1'='1' -- </li>
+                <li>admin' OR '1'='1' LIMIT 1 --</li>
+                <li>admin' AND 1=2 UNION SELECT ... (高度)</li>
+            </ul>
+            <p class="small">Burp Repeater で複数回試してみよう。</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

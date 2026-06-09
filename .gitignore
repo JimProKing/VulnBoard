@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+vulnboard.db
+venv/
+.env
+.venv/
+*.log
+.DS_Store

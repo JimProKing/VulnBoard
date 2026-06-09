@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-danger">管理者パネル</h2>
+<p>ここまで来れば既に相当な権限を得ている状態です。</p>
+
+<h4>全体ユーザー</h4>
+<table class="table table-sm">
+    <tr><th>ID</th><th>アイディ</th><th>ニックネーム</th><th>メール</th><th>管理者</th><th>作業</th></tr>
+    {% for u in users %}
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.nickname }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ 'はい' if u.is_admin else 'いいえ' }}</td>
+        <td>
+            <form method="post" action="/admin/users/{{ u.id }}/delete" style="display:inline">
+                <button class="btn btn-sm btn-danger" onclick="return confirm('本当？')">削除</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h4 class="mt-4">Secrets テーブル (これが本物の目標)</h4>
+<table class="table table-sm table-bordered">
+    <tr><th>ID</th><th>Owner</th><th>Secret</th><th>Flag</th></tr>
+    {% for s in secrets %}
+    <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.owner }}</td>
+        <td>{{ s.secret }}</td>
+        <td><span class="flag">{{ s.flag }}</span></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="alert alert-success">
+    SQL Injection で secrets テーブルの全フラグを抽出するのがこのサイトのメインチャレンジの一つです。<br>
+    UNION, Blind, Time-based など各種方法で試してみよう。
+</div>
+{% endblock %}

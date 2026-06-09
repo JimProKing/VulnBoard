@@ -1,0 +1,4 @@
+flask==3.0.*
+requests==2.*
+# 追加ツールは後で必要になった時に
+# pip install -r requirements.txt

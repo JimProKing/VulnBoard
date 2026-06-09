@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>プロファイル参照</h2>
+
+{% if user %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4>{{ user.nickname }} ({{ user.username }})</h4>
+            <p>Email: {{ user.email }}</p>
+            <p>権限: {% if user.is_admin %}管理者{% else %}一般ユーザー{% endif %}</p>
+            <p>加入日: {{ user.created_at }}</p>
+        </div>
+    </div>
+
+    <h5>{{ user.nickname }} さんが作成した投稿</h5>
+    <ul>
+        {% for p in user_posts %}
+            <li><a href="/post/{{ p.id }}">{{ p.title }}</a> ({{ p.created_at[:10] }})</li>
+        {% else %}
+            <li>作成した投稿がありません。</li>
+        {% endfor %}
+    </ul>
+
+    <div class="alert alert-warning mt-4">
+        <strong>IDOR / Parameter Tampering 実習 地点</strong><br>
+        現在 URL: <code>/profile/{{ viewed_username }}</code><br>
+        別の人のプロファイルを直接呼び出してみよう: <code>/profile/admin</code>, <code>/profile/sumi</code><br>
+        Burp で <code>username</code> パラメータを操作したり、クッキー/セッションを変更してみよう。
+    </div>
+{% else %}
+    <div class="alert alert-danger">ユーザーが見つかりません。</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if post %}
+    <h2>{{ post.title }}</h2>
+    <p class="text-muted">作成者: <a href="/profile/{{ post.nickname }}">{{ post.nickname }}</a> | {{ post.created_at }}</p>
+
+    <div class="card mb-4">
+        <div class="card-body" style="white-space: pre-wrap;">{{ post.content }}</div>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger small">
+        <strong>クエリ エラー (エラー基盤 SQLi 実習用):</strong><br>
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <h4>コメント (Stored XSS 実習)</h4>
+    <form method="post" action="/post/{{ post.id }}/comment" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="content" class="form-control" placeholder='コメントを入力してください。 &lt;script&gt;alert(1)&lt;/script&gt; も入れてみよう' required>
+            <button class="btn btn-primary" type="submit">登録</button>
+        </div>
+    </form>
+
+    <ul class="list-group">
+        {% for c in comments %}
+            <li class="list-group-item">
+                <strong>{{ c.nickname }}</strong> <span class="text-muted small">{{ c.created_at[:16] }}</span><br>
+                <div style="white-space: pre-wrap;">{{ c.content | safe }}</div>
+            </li>
+        {% else %}
+            <li class="list-group-item text-muted">まだコメントがありません。</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <p class="small text-muted">
+        このページの脆弱点: <span class="vuln-highlight">/post/&lt;id&gt;</span> で ID を直接操作可能。<br>
+        例: <code>/post/1' UNION SELECT 1,username,password,4,5,6 FROM users--</code><br>
+        カラム数を合わせる練習をしよう (エラーメッセージで確認)。
+    </p>
+{% else %}
+    <div class="alert alert-danger">投稿が見つかりません。 (ID injection で別の文を呼び出してみよう)</div>
+{% endif %}
+
+<a href="/board" class="btn btn-secondary mt-3">← 投稿板に戻る</a>
+{% endblock %}

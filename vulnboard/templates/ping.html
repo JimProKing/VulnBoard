@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>ネットワークツール - Ping</h2>
+<p>OS Command Injection (Ch05) 実習用ページです。</p>
+
+<form method="post" class="row g-2">
+    <div class="col-md-6">
+        <input type="text" name="host" class="form-control" value="127.0.0.1" placeholder="対象ホスト">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" type="submit">Ping 実行</button>
+    </div>
+</form>
+
+{% if cmd %}
+<div class="mt-3">
+    <strong>実行された命令:</strong> <code>{{ cmd }}</code>
+</div>
+{% endif %}
+
+{% if result %}
+<pre class="bg-dark text-light p-3 mt-2" style="white-space: pre-wrap;">{{ result }}</pre>
+{% endif %}
+
+<div class="alert alert-info small mt-4">
+    <strong>Windows で Command Injection テスト例:</strong><br>
+    <code>127.0.0.1 &amp; whoami</code><br>
+    <code>127.0.0.1 | dir</code><br>
+    <code>127.0.0.1 &amp; type C:\Windows\win.ini</code><br><br>
+    このアプリは subprocess を shell=True で実行するので命令連結がそのまま動作します。
+</div>
+{% endblock %}

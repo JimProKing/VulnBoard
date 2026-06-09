@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>投稿板</h2>
+
+<form class="row g-2 mb-4" method="get">
+    <div class="col-auto">
+        <input type="text" name="q" class="form-control" placeholder="タイトル/内容 検索 (SQLi 実習)" value="{{ keyword }}">
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-primary" type="submit">検索</button>
+        <a href="/board" class="btn btn-outline-secondary">全体表示</a>
+    </div>
+</form>
+
+{% if error %}
+<div class="alert alert-danger"><strong>DB エラー:</strong> {{ error }}</div>
+{% endif %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>タイトル</th>
+            <th>作成者</th>
+            <th>作成日</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in posts %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td><a href="/post/{{ p.id }}">{{ p.title }}</a></td>
+            <td>{{ p.nickname }}</td>
+            <td>{{ p.created_at[:10] }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">投稿がありません。</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="alert alert-info small">
+    <strong>このページの SQLi ポイント:</strong><br>
+    検索語に <code>' OR '1'='1</code> または UNION SELECT を入れてみよう。<br>
+    Burpでリクエストを拡え取って <code>q</code> パラメータを自由に操作する練習をしよう。
+</div>
+{% endblock %}

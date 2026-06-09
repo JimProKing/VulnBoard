@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>高度検索 (もう一つの SQLi 実習地点)</h2>
+<p>board 検索とは別のクエリで作られています。各種技法を実習しよう。</p>
+
+<form class="row g-2 mb-3" method="get">
+    <div class="col-md-8">
+        <input type="text" name="q" class="form-control" placeholder="検索語 (UNION, Blind, Time-based すべて試してみよう)" value="{{ q }}">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary">検索</button>
+    </div>
+</form>
+
+{% if error %}
+<div class="alert alert-danger">
+    <strong>エラー基盤 SQLi 機会！</strong><br>
+    {{ error }}
+</div>
+{% endif %}
+
+{% if results %}
+<table class="table">
+    <thead><tr><th>ID</th><th>タイトル</th><th>内容ミプリビュー</th></tr></thead>
+    <tbody>
+        {% for r in results %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td><a href="/post/{{ r.id }}">{{ r.title }}</a></td>
+            <td>{{ r.content[:80] }}...</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif q %}
+<p class="text-muted">結果がありません。 (Blind SQLi で '結果なし' vs '結果あり' の差を利用しよう)</p>
+{% endif %}
+
+<div class="mt-4 p-3 bg-light small">
+    <strong>このページ推奨攻撃:</strong><br>
+    - エラー基盤: 文法エラーを発生させてカラム数把握<br>
+    - Boolean blind: 真/偽で結果数や内容が違うのを利用<br>
+    - Time-based: 条件付きで遅延を発生させる (このアプリではアプリレベルで一部サポート)
+</div>
+{% endblock %}
