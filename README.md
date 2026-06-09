@@ -1,16 +1,15 @@
-# 🔥 VulnBoard
+# VulnBoard
 
-**"공격 알아야 방어 보인다" — 크리핵티브의 한 권으로 끝내는 웹 해킹 바이블 실전 연습장**
+**웹 해킹 실습용 취약 웹사이트 + Burp 연습 프로젝트**
 
-> 책 900페이지 읽기 지루하다고?  
-> **그럼 직접 부숴.**  
-> Burp 켜고, SQL Injection으로 admin 되는 그 맛을 느껴봐.
+크리핵티브의 《한 권으로 끝내는 웹 해킹 바이블》을 공부하면서 만들어본 프로젝트입니다.
 
-VulnBoard는 **의도적으로 취약한** 하나의 웹사이트 + 기초 예제들로 구성된 **안전한 해킹 놀이터**야.
+책만 읽다 보니 너무 지루해서, "직접 만들어서 해킹하면서 배우자"는 생각으로 시작했습니다. 
+책의 구조를 따라가며 SQL Injection, XSS, IDOR, 파일 업로드 등 주요 취약점을 실습할 수 있는 하나의 메인 타겟(VulnBoard)과 기초 예제들을 만들었어요.
 
 ---
 
-## 🚀 30초 만에 시작하기
+## 🚀 시작하기
 
 ```bash
 git clone https://github.com/JimProKing/VulnBoard.git
@@ -19,93 +18,64 @@ pip install -r ../../requirements.txt
 python app.py
 ```
 
-브라우저에서 http://127.0.0.1:5002 열고  
-**Burp Suite** 켜는 거 잊지 마 (이게 진짜 주인공임)
+http://127.0.0.1:5002 에서 접속
 
-기본 계정:
-- `admin` / `admin123!@#`
-- `chulsu` / `test123`
+**꼭 Burp Suite를 켜고** 하세요. 이 프로젝트의 진짜 목적은 Burp로 직접 요청을 가로채고 수정하면서 공격하는 감각을 기르는 거예요.
 
----
-
-## 🎮 주요 챌린지 (HACKING_CHALLENGES.md 필독)
-
-- **Level 1**: 로그인 SQLi로 admin 탈취 (`admin' -- ` 의 맛)
-- **Level 2**: 검색에서 UNION으로 secrets 테이블 털기
-- **Level 3~5**: 게시글 ID, Blind, Time-based SQLi
-- **보너스**: Stored XSS, IDOR, Broken Access Control, 파일 업로드, Command Injection
-
-secrets 테이블에 **FLAG**들이 숨겨져 있어. 다 먹으면 승리.
+기본 로그인 정보:
+- admin / admin123!@#
+- chulsu / test123
 
 ---
 
-## 🛠️ 들어있는 것들
+## 🎯 주요 실습 내용
 
-| 폴더          | 내용                              | 책 매핑          |
-|---------------|-----------------------------------|------------------|
-| `vulnboard/`  | 메인 취약 게시판 (강추)           | Ch04~Ch11       |
-| `01-basics/`  | 왜 웹이 공격 맛집인가?            | Ch01            |
-| `02-http-burp`| HTTP + Burp 완전 정복             | Ch02            |
+- **VulnBoard** (메인)
+  - 로그인 우회 (SQLi)
+  - 검색/게시글 SQL Injection (UNION, Blind, Time-based)
+  - Stored XSS (댓글)
+  - IDOR / 파라미터 변조
+  - Broken Access Control (/admin)
+  - 파일 업로드 취약점
+  - OS Command Injection (Ping 도구)
 
-모든 취약점 코드에 `# VULNERABLE:` 주석 달아놨음.  
-직접 소스 보면서 "아 이 한 줄 때문에..." 깨달아라.
+- **01-basics**: 입력값 검증 미흡의 기본 개념 (Ch01)
+- **02-http-burp**: HTTP와 Burp Suite 기초 다지기 (Ch02)
 
----
-
-## ⚠️ 진짜 중요한 주의사항
-
-- 이건 **학습용**이야. 실제 서비스에 이런 거 날리면 진짜 감옥 간다.
-- `/reset` 누르면 DB가 깨끗해짐. 실험하다 망가뜨려도 OK.
-- Burp Repeater를 신처럼 모셔라.
+모든 취약한 부분에는 코드에 주석으로 표시해뒀습니다.
 
 ---
 
-## 💡 학습 팁 (크리핵티브 스타일)
+## 📝 공부하면서 남긴 노트
 
-1. 무조건 Burp로 모든 요청 가로채기
-2. 에러 메시지 무시하지 말기 (그게 네 친구야)
-3. "이 쿼리가 실제로 어떻게 생겼을까?" 상상하면서 공격
-4. 성공한 페이로드는 Repeater에 저장
-5. 막히면 "Level 2에서 컬럼 수가 안 맞아" 라고 말하면 도와줄게
+`vulnboard/HACKING_CHALLENGES.md` 에 레벨별로 챌린지와 힌트를 정리해놨습니다.
+
+책을 따라가면서 실제로 공격해보고, 에러 메시지 보고, 컬럼 수 맞추고, flag 뽑는 과정을 직접 경험하려고 했어요.
+
+`/reset` 경로로 DB를 언제든 초기화할 수 있게 해놔서 실험하기 편하게 만들었습니다.
 
 ---
 
-## 📦 설치 & 실행 (Windows 기준)
+## ⚠️ 주의사항
 
-```powershell
-# 1. 저장소 클론
-git clone https://github.com/JimProKing/VulnBoard.git
-cd VulnBoard\webhacking-bible-lab
+- 이건 **순수 학습용**입니다. 실제 서비스에는 절대 사용하지 마세요.
+- 공부 목적으로만 활용해주세요.
 
-# 2. 의존성
-pip install -r requirements.txt
+---
 
-# 3. VulnBoard 실행 (메인)
-cd vulnboard
-python app.py
+## 📁 폴더 구조
+
+```
+webhacking-bible-lab/
+├── 01-basics/          # 기본 개념 실습 (파라미터 변조 등)
+├── 02-http-burp/       # HTTP + Burp 마스터
+├── vulnboard/          # 메인 실습 타겟 (강력 추천)
+├── README.md
+└── requirements.txt
 ```
 
 ---
 
-## 🎉 이 프로젝트가 만들어진 이유
+공부하면서 만든 거라 완벽하진 않지만, 비슷하게 공부하시는 분들께 조금이라도 도움이 되길 바랍니다.
 
-사용자가 "책 읽는 건 재미없고, 웹사이트 직접 만들어서 해킹하면서 공부하고 싶다"고 해서 태어난 프로젝트.
-
-작은 예제 여러 개 대신, **하나의 제대로 된 취약 사이트**를 만들어서 실제 해킹 감각을 키울 수 있게 했다.
-
-공식 책 예제 (Tomcat+JSP)는 무거우니까, 이건 Flask + SQLite로 가볍게 Windows에서도 바로 돌릴 수 있게 만들었음.
-
----
-
-**이제 가서 admin 계정 털어라.**
-
-그리고 성공하면 나한테 "Level 1 클리어" 라고 말해.  
-다음 레벨로 안내해줄게.
-
-해킹 재밌게 하자 🔥
-
-*(이 프로젝트는 크리핵티브 바이블 공부용으로 만들어졌으며, 실제 공격 연습은 절대 금지)*
-
----
-
-Made with ❤️ (and a lot of `admin' -- `) by Grok for you.
+Burp 열심히 켜고 하세요!
