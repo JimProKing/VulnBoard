@@ -1,6 +1,10 @@
 # VulnBoard
 
-웹 해킹 공부하면서 직접 만들어 본 실습 프로젝트입니다.
+웹 해킹 공부하면서 직접 만들어 본 실습 프로젝트입니다. 문제 20개로 확장한 다음 버전은 [webhacking-bible-lab](https://github.com/JimProKing/webhacking-bible-lab)입니다.
+
+| 분류 | 상태 | 스택 | 바로 보기 |
+| --- | --- | --- | --- |
+| 웹 보안 · 실습 랩 | 보관 (→ webhacking-bible-lab) | Python · Flask · SQLite | — |
 
 크리핵티브의 《한 권으로 끝내는 웹 해킹 바이블》을 보다가, 책만 읽는 게 너무 지루해서 "그럼 내가 직접 취약한 사이트를 만들어서 연습해보자" 하고 시작한 프로젝트예요.
 
@@ -65,3 +69,10 @@ DB가 망가졌거나 다시 시작하고 싶으면 `/reset` 로 가면 초기�
 공부하다가 막히는 부분 있으면 저도 아직 배우는 중이라... 같이 보면서 해보면 좋을 것 같아요.
 
 Burp 열심히 켜고 하시길 바랍니다.
+
+---
+
+**관련 저장소** · [webhacking-bible-lab](https://github.com/JimProKing/webhacking-bible-lab) · [sql-injection-lab](https://github.com/JimProKing/sql-injection-lab) · [api-hacking-notes](https://github.com/JimProKing/api-hacking-notes) · [Unprotected-Admin-Functionality-simple](https://github.com/JimProKing/Unprotected-Admin-Functionality-simple) · [File-Path-Traversal-simple](https://github.com/JimProKing/File-Path-Traversal-simple) · [dreamhack](https://github.com/JimProKing/dreamhack)
+
+<sub>[JimProKing](https://github.com/JimProKing) · 이영찬 — 전체 저장소는 프로필의 프로젝트 지도에서 분야별로 볼 수 있습니다.</sub>
+<!-- jpk-footer -->
